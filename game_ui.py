@@ -114,7 +114,7 @@ class GameUI:
         
         self.play_again_btn = tk.Button(
             play_again_frame,
-            text="🎮 Play Again",
+            text="Play Again",
             font=("Helvetica", 24, "bold"),
             bg="#00ff00",  # Bright green to be very visible
             fg="#000000",  # Black text for contrast
@@ -135,7 +135,7 @@ class GameUI:
         # New game button
         new_game_btn = tk.Button(
             control_frame,
-            text="🔄 New Game",
+            text="New Game",
             font=("Helvetica", 14, "bold"),
             bg="#3182ce",
             fg=self.text_color,
@@ -150,7 +150,7 @@ class GameUI:
         # Quit button
         quit_btn = tk.Button(
             control_frame,
-            text="❌ Quit",
+            text="Quit",
             font=("Helvetica", 14, "bold"),
             bg="#e53e3e",
             fg=self.text_color,
@@ -185,7 +185,7 @@ class GameUI:
         """Draw a line through the winning combination"""
         if not combo or len(combo) < 3:
             return
-            
+        # TODO: Draw a line through the winning combination
         # Just rely on the button highlighting for now
         # The orange background with larger font makes it clear enough
         pass
@@ -247,7 +247,7 @@ class GameUI:
         if self.game_logic.is_game_over():
             if self.game_logic.get_winner():
                 self.status_label.config(
-                    text=f"🎉 Player {self.game_logic.get_winner()} Wins!",
+                    text=f"Player {self.game_logic.get_winner()} Wins!",
                     fg=self.win_color
                 )
                 # Update score
@@ -263,15 +263,13 @@ class GameUI:
                     self.draw_winning_line(winning_combo)
                     
                 # Enable Play Again button
-                print("Enabling Play Again button")
                 self.play_again_btn.configure(state="normal")
             else:
                 self.status_label.config(
-                    text="🤝 It's a Tie!",
+                    text="It's a Tie!",
                     fg="#a0a0a0"
                 )
                 # Enable Play Again button for ties too
-                print("Enabling Play Again button for tie")
                 self.play_again_btn.configure(state="normal")
         else:
             self.status_label.config(
