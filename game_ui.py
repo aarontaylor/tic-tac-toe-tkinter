@@ -90,9 +90,9 @@ class GameUI:
                 btn = tk.Button(
                     self.board_frame,
                     text="",
-                    font=("Helvetica", 28, "bold"),  # Larger font for better visibility
-                    width=6,
-                    height=3,
+                    font=("Helvetica", 24, "bold"),  # Fixed font size
+                    width=8,  # Fixed width
+                    height=4,  # Fixed height
                     bg=self.button_bg,
                     fg=self.text_color,
                     relief="flat",
@@ -107,6 +107,26 @@ class GameUI:
         for i in range(3):
             self.board_frame.grid_rowconfigure(i, weight=1)
             self.board_frame.grid_columnconfigure(i, weight=1)
+        
+        # Play Again button - visible and prominent
+        play_again_frame = tk.Frame(main_frame, bg=self.bg_color)
+        play_again_frame.pack(pady=20)
+        
+        self.play_again_btn = tk.Button(
+            play_again_frame,
+            text="🎮 Play Again",
+            font=("Helvetica", 24, "bold"),
+            bg="#00ff00",  # Bright green to be very visible
+            fg="#000000",  # Black text for contrast
+            padx=80,
+            pady=30,
+            relief="raised",
+            bd=5,
+            command=self.on_new_game
+        )
+        self.play_again_btn.pack()
+        # Start disabled
+        self.play_again_btn.configure(state="disabled")
         
         # Control buttons
         control_frame = tk.Frame(main_frame, bg=self.bg_color)
@@ -142,6 +162,7 @@ class GameUI:
         )
         quit_btn.pack(side=tk.LEFT, padx=10)
         
+        
         # Score display
         score_frame = tk.Frame(main_frame, bg=self.card_color, relief="flat", bd=0)
         score_frame.pack(fill="x", pady=20, ipady=10, ipadx=20)
@@ -158,6 +179,7 @@ class GameUI:
         # Initialize score
         self.x_score = 0
         self.o_score = 0
+        
     
     def draw_winning_line(self, combo):
         """Draw a line through the winning combination"""
@@ -213,6 +235,9 @@ class GameUI:
             for label in self.winning_labels:
                 label.destroy()
             self.winning_labels = []
+        
+        # Disable Play Again button for new game
+        self.play_again_btn.configure(state="disabled")
             
         self.update_display()
     
@@ -236,16 +261,25 @@ class GameUI:
                 winning_combo = self.game_logic.get_winning_combo()
                 if winning_combo:
                     self.draw_winning_line(winning_combo)
+                    
+                # Enable Play Again button
+                print("Enabling Play Again button")
+                self.play_again_btn.configure(state="normal")
             else:
                 self.status_label.config(
                     text="🤝 It's a Tie!",
                     fg="#a0a0a0"
                 )
+                # Enable Play Again button for ties too
+                print("Enabling Play Again button for tie")
+                self.play_again_btn.configure(state="normal")
         else:
             self.status_label.config(
                 text=f"Player {self.game_logic.get_current_player()}'s Turn",
                 fg=self.text_color
             )
+            # Disable Play Again button during active game
+            self.play_again_btn.configure(state="disabled")
         
         # Get winning combo first to know which buttons to handle differently
         winning_combo = self.game_logic.get_winning_combo()
@@ -273,7 +307,9 @@ class GameUI:
                         foreground="#ffffff",  # Pure white
                         disabledforeground="#ffffff",  # White when disabled
                         state="disabled",
-                        font=("Helvetica", 32, "bold"),  # Even larger font
+                        font=("Helvetica", 24, "bold"),  # Keep consistent font
+                        width=8,  # Maintain fixed width
+                        height=4,  # Maintain fixed height
                         relief="flat",
                         bd=0
                     )
@@ -289,7 +325,9 @@ class GameUI:
                         foreground="#ffffff",  # Pure white
                         disabledforeground="#ffffff",  # White when disabled
                         state="disabled",
-                        font=("Helvetica", 32, "bold"),  # Even larger font
+                        font=("Helvetica", 24, "bold"),  # Keep consistent font
+                        width=8,  # Maintain fixed width
+                        height=4,  # Maintain fixed height
                         relief="flat",
                         bd=0
                     )
@@ -304,7 +342,9 @@ class GameUI:
                         background=self.button_bg,
                         foreground=self.text_color,
                         state="normal",
-                        font=("Helvetica", 32, "bold"),
+                        font=("Helvetica", 24, "bold"),
+                        width=8,  # Maintain fixed width
+                        height=4,  # Maintain fixed height
                         relief="flat",
                         bd=0
                     )

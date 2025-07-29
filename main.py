@@ -14,7 +14,7 @@ class TicTacToeGame:
         # Create main window
         self.window = tk.Tk()
         self.window.title("Tic-Tac-Toe")
-        self.window.geometry("500x650")
+        self.window.geometry("500x900")
         self.window.resizable(False, False)
         self.window.configure(bg="#0f0f23")
         
